@@ -53,25 +53,27 @@ const Signup = () => {
                     "Content-Type": "application/json"
                 }
             })
+            console.log(res);
             if (res.data.success) {
                 navigate('/verify');
                 toast.success(res.data.message);
 
             } else {
-                toast.error(res.message);
-                console.log(res.message);
+                toast.error(res.data.message);
+                console.log(res.data.message);
             }
+            
+
+        } catch (error) {
+            console.log(error);
+            toast.error(error.response.data.message);
+        }finally{
             setFormData({
                 firstName: "",
                 lastName: "",
                 email: "",
                 password: ""
             })
-
-        } catch (error) {
-            console.log(error);
-            toast.error(error.response.data.message);
-        }finally{
             setLoading(false);
         }
 
