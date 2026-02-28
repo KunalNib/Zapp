@@ -1,11 +1,13 @@
 import axios from 'axios';
 import React, { useEffect,useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { toast } from 'sonner';
 
 const VerifyEmail = () => {
     const {token}=useParams();
     const [status,setStatus]=useState("Verifying...");
     const navigate=useNavigate();
+
 
     const verify=async ()=>{
         try{
@@ -16,6 +18,7 @@ const VerifyEmail = () => {
             })
             if(res.data.success){
                 setStatus('Email Verified successfully');
+                toast.success(res.data.message);
                 setTimeout(()=>{
 
                 },2000);
@@ -24,6 +27,7 @@ const VerifyEmail = () => {
         }
         catch(error){
             console.log(error);
+            
             setStatus("Verification Failed, Please try again")
         }
     }

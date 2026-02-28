@@ -16,6 +16,8 @@ import {
 } from '@/components/ui/card'
 import { Eye, EyeOff } from 'lucide-react'
 import { toast } from 'sonner';
+import { useDispatch } from 'react-redux';
+import { setUser } from '@/redux/userSlice';
 
 const Login = () => {
   const [formData,setFormData]=useState({
@@ -25,6 +27,7 @@ const Login = () => {
   const [showPassword,setShowPassword]=useState(false);
   const [loading,setLoading]=useState(false);
   const navigate=useNavigate();
+  const dispatch=useDispatch();
 
   const changeShowPassword=()=>{
     setShowPassword(!showPassword);
@@ -45,8 +48,11 @@ const Login = () => {
         }
       })
       if(res.data.success){
-        toast.success(res.data.message);
         navigate("/")
+        dispatch(setUser(res.data.user));
+        localStorage.setItem('accessToken',res.data.accessToken)
+
+        toast.success(res.data.message);
       }
       else {
         console.log(res.data.message);
@@ -56,6 +62,7 @@ const Login = () => {
     }catch(error){
       console.log(error);
       toast.error(error.response.data.message);
+
     }
     finally{
       setLoading(false);
@@ -70,8 +77,8 @@ const Login = () => {
     <div className='flex justify-center items-center min-h-screen bg-blue-100'>
             <Card className="w-full max-w-sm ">
                 <CardHeader>
-                    <CardTitle>Login in to your account</CardTitle>
-                    <CardDescription>
+                    <CardTitle className='text-blue-400'>Login in to your account</CardTitle>
+                    <CardDescription className='text-gray-400'>
                         Enter given details below to login to your account
                     </CardDescription>
                     {/* <CardAction>
@@ -115,7 +122,7 @@ const Login = () => {
                     </div>
                 </CardContent>
                 <CardFooter className="flex-col gap-2">
-                    <Button type="submit" onClick={submitHandler} className="w-full bg-gray-600 hover:bg-gray-500">
+                    <Button type="submit" onClick={submitHandler} className="w-full bg-blue-400 hover:bg-blue-900">
                         {loading?<><Loader2 className="h-4 w-4 animate-spin mr-2"/> Please wait</>:'Login'}
                     </Button>
                     <p className='text-gray-700'>Already have a account?  <Link className='hover:underline cursor-pointer  text-blue-900' to={'/signup'}>Signup</Link></p>
