@@ -4,12 +4,16 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Button } from './ui/button';
 import { toast } from 'sonner';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser } from '@/redux/userSlice';
 
 const Navbar = () => {
   const {user}=useSelector(store=>store.user)
   const accessToken=localStorage.getItem('accessToken')
   const navigate=useNavigate();
+  const dispatch=useDispatch();
+
+
   const logoutHandler=async()=>{
     try{
       const res=await axios.post('http://localhost:8000/api/user/logout',{},{
@@ -19,6 +23,8 @@ const Navbar = () => {
       })
       if(res.data.success){
         toast.success(res.data.message);
+        dispatch(setUser(null));
+        localStorage.setItem('accessToken','');
         navigate('/login');
         
       }
@@ -27,7 +33,7 @@ const Navbar = () => {
       }
     }catch(error){
       console.log(error);
-      // toast.error(error.response.data.message);
+      toast.error(error?.response?.data?.message);
     }
   }
 
@@ -45,7 +51,7 @@ const Navbar = () => {
             <Link to={'/'}>Home</Link>
             <Link to={'products'}>Products</Link>
             {
-              user && <Link to={'/profile'}>Hello {user.firstName}</Link>
+              user && <Link to={'/profile'}>{user.firstName}</Link>
             }
             {/* <Link to=''></Link> */}
 

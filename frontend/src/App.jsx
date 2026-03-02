@@ -8,6 +8,7 @@ import './App.css'
 import Verify from './pages/Verify'
 import VerifyEmail from './pages/VerifyEmail'
 import Footer from './components/Footer'
+import Profile from './pages/Profile'
 
 
 
@@ -30,6 +31,10 @@ const router=createBrowserRouter([
   {
     path:'/verify/:token',
     element:<><VerifyEmail/></>
+  },
+  {
+    path:'/profile',
+    element:<><Navbar/><Profile/></>
   }
 ])
 
