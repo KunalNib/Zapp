@@ -43,7 +43,7 @@ const Signup = () => {
         setShowPassword(!showPassword);
     }
 
-    const submitHandler = async (e) => {
+    const submitHandler = async () => {
         // e.preventDefault();
         console.log(formData);
         try {
@@ -155,7 +155,7 @@ const Signup = () => {
                     </div>
                 </CardContent>
                 <CardFooter className="flex-col gap-2">
-                    <Button type="submit" onClick={submitHandler} className="w-full bg-gray-600 hover:bg-gray-500">
+                    <Button type="submit" onClick={submitHandler} className="w-full bg-blue-400 hover:bg-blue-900">
                         {loading?<><Loader2 className="h-4 w-4 animate-spin mr-2"/> Please wait</>:'Signup'}
                     </Button>
                     <p className='text-gray-700'>Already have a account?  <Link className='hover:underline cursor-pointer  text-blue-900' to={'/login'}>Login</Link></p>

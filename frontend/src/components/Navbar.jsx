@@ -51,7 +51,7 @@ const Navbar = () => {
             <Link to={'/'}>Home</Link>
             <Link to={'products'}>Products</Link>
             {
-              user && <Link to={'/profile'}>{user.firstName}</Link>
+              user && <Link to={`/profile/${user._id}`}>{user.firstName}</Link>
             }
             {/* <Link to=''></Link> */}
 
@@ -61,7 +61,7 @@ const Navbar = () => {
             <span className=' rounded-full absolute text-xl text-blue-400 -top-3 -right-5  px-2'>1</span>
           </Link>
           {
-            user? <Button onClick={logoutHandler} className='bg-blue-400'>Logout</Button>: <Button onClick={toLogin} className='bg-blue-400'>Login</Button>
+            user? <Button onClick={logoutHandler} className='bg-blue-600'>Logout</Button>: <Button onClick={toLogin} className='bg-blue-400'>Login</Button>
           }
           {/* // <Button className='text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-base text-sm px-4 py-2.5 text-center leading-5'>Logout</Button>:<Button className='text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-base text-sm px-4 py-2.5 text-center leading-5'>Login</Button> */}
 

@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { createBrowserRouter,RouterProvider } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Home from './pages/Home'
@@ -33,13 +32,12 @@ const router=createBrowserRouter([
     element:<><VerifyEmail/></>
   },
   {
-    path:'/profile',
+    path:'/profile/:userId',
     element:<><Navbar/><Profile/></>
   }
 ])
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>

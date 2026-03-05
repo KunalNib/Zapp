@@ -66,10 +66,10 @@ const Login = () => {
     }
     finally{
       setLoading(false);
-      setFormData({
-        email:"",
-        password:""
-      })
+      // setFormData({
+      //   email:"",
+      //   password:""
+      // })
     }
 
   }
