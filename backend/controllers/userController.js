@@ -366,7 +366,7 @@ export const updateUser = async (req, res) => {
         message: "you are not authorized to update this profile"
       })
     }
-    let user = await User.findById(userIdToUpdate);
+    let user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({
         success: false,

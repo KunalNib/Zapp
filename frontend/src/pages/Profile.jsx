@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, {  useState } from 'react'
 import {
   Card,
   CardContent,
@@ -15,15 +15,20 @@ import {
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import image from '../../public/image.png'
+import image from '../assets/image.png'
+import axios from 'axios';
+import { toast } from 'sonner';
+import { setUser } from '@/redux/userSlice'
+
 
 
 
 const Profile = () => {
   const { user } = useSelector(store => store.user);
   const { userId } = useParams();
+  const dispatch = useDispatch();
   const [updateUser, setUpdateUser] = useState({
     firstName:user?.firstName,
     lastName: user?.lastName,
@@ -44,6 +49,7 @@ const Profile = () => {
   }
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
+    
     setFile(selectedFile);
     setUpdateUser({
       ...updateUser,
@@ -53,7 +59,36 @@ const Profile = () => {
   
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(updateUser);
+    const accessToken = localStorage.getItem("accessToken");
+    try {
+      const formData = new FormData();
+      formData.append("firstName", updateUser.firstName);
+      formData.append("lastName", updateUser.lastName);
+      formData.append("email", updateUser.email);
+      formData.append("phoneNo", updateUser.phoneNo);
+      formData.append("address", updateUser.address);
+      formData.append("city", updateUser.city);
+      formData.append("zipCode", updateUser.zipCode);
+      formData.append("role", updateUser.role);
+      if (file) {
+        formData.append("file", file);
+      }
+      const res=await axios.put(`http://localhost:8000/api/user/update/${userId}`, formData, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      if (res.data.success) {
+        toast.success(res.data.message);
+        dispatch(setUser(res.data.user));
+      }
+    }
+    catch (error) {
+      console.log(error);
+      toast.error("Failed to update profile");
+    }
+
     
   }
   
@@ -71,13 +106,13 @@ const Profile = () => {
               <h1 className='font-bold mb-7 text-2xl text-blue-600 '>Update Profile</h1>
               <div className='w-full flex gap-10 justify-between items-start px-7 max-w-2xl'>
                 <div className='flex flex-col items-center'>
-                  <img src={updateUser.profilePic || image} alt="profile" className='w-32 h-32 rounded-full object-cover border-blue-800'>
+                  <img src={updateUser.profilePic || image} alt="profile" className='w-42 h-32 rounded-full object-cover border-blue-800'>
                   </img>
                   <Label className="mt-4 cursor-pointer  bg-blue-600 text-white px-4 py-2 ps-8 rounded-md hover:bg-blue-700" >Change Picture
                     <input type="file" onChange={handleFileChange}  accept="image/*" className="hidden" />
                   </Label>
                 </div>
-                <form className='space-y-4 shadow-lg p-5 rounded-lg bg-white'>
+                <form className='space-y-4 shadow-lg p-5 rounded-lg bg-white' onSubmit={handleSubmit}>
                   <div className='grid grid-cols-2 gap-4'>
                     <div>
                       <Label className="block text-sm font-medium text-gray-500">First Name</Label>
@@ -101,15 +136,17 @@ const Profile = () => {
                     <Label className="block text-sm font-medium text-gray-500">Address</Label>
                     <Input type="text" name="address" placeholder="Enter your Address"  onChange={handleChange}  className="w-full border rounded-lg px-3 py-2 mt-1 "></Input>
                   </div>
-                  <div>
-                    <Label className="block text-sm font-medium text-gray-500">City</Label>
-                    <Input type="text" value={updateUser.city} name="city"  onChange={handleChange}  placeholder="Enter your City" className="w-full border rounded-lg px-3 py-2 mt-1 "></Input>
+                  <div className='grid grid-cols-2 gap-4 '>
+                    <div>
+                      <Label className="block text-sm font-medium text-gray-500">City</Label>
+                      <Input type="text" value={updateUser.city} name="city"  onChange={handleChange}  placeholder="Enter your City" className="w-full border rounded-lg px-3 py-2 mt-1 "></Input>
+                    </div>
+                    <div>
+                      <Label className="block text-sm font-medium text-gray-500">Zip Code</Label>
+                      <Input type="text" value={updateUser.zipCode} name="zipCode"  onChange={handleChange}  placeholder="Enter your Zip Code" className="w-full border rounded-lg px-3 py-2 mt-1 "></Input>
+                    </div>                    
                   </div>
-                  <div>
-                    <Label className="block text-sm font-medium text-gray-500">Zip Code</Label>
-                    <Input type="text" value={updateUser.zipCode} name="zipCode"  onChange={handleChange}  placeholder="Enter your Zip Code" className="w-full border rounded-lg px-3 py-2 mt-1 "></Input>
-                  </div>
-                  <Button type="submit" onSubmit={handleSubmit} className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg">Update Profile</Button>
+                  <Button type="submit"  className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg">Update Profile</Button>
                 </form>
               </div>
             </div>
