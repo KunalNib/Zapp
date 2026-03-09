@@ -106,7 +106,7 @@ const Profile = () => {
               <h1 className='font-bold mb-7 text-2xl text-blue-600 '>Update Profile</h1>
               <div className='w-full flex gap-10 justify-between items-start px-7 max-w-2xl'>
                 <div className='flex flex-col items-center'>
-                  <img src={updateUser.profilePic || image} alt="profile" className='w-42 h-32 rounded-full object-cover border-blue-800'>
+                  <img src={updateUser?.profilePic || image} alt="profile" className='w-42 h-32 rounded-full object-cover border-blue-800'>
                   </img>
                   <Label className="mt-4 cursor-pointer  bg-blue-600 text-white px-4 py-2 ps-8 rounded-md hover:bg-blue-700" >Change Picture
                     <input type="file" onChange={handleFileChange}  accept="image/*" className="hidden" />
@@ -116,21 +116,21 @@ const Profile = () => {
                   <div className='grid grid-cols-2 gap-4'>
                     <div>
                       <Label className="block text-sm font-medium text-gray-500">First Name</Label>
-                      <Input type="text" value={updateUser.firstName} onChange={handleChange}  name="firstName" placeholder="John" className="w-full border rounded-lg px-3 py-2 mt-1" ></Input>
+                      <Input type="text" value={updateUser?.firstName} onChange={handleChange}  name="firstName" placeholder="John" className="w-full border rounded-lg px-3 py-2 mt-1" ></Input>
                     </div>
                     <div>
                       <Label className="block text-sm font-medium text-gray-500">Last Name</Label>
-                      <Input type="text" value={updateUser.lastName} name="lastName" placeholder="Doe"  onChange={handleChange}  className="w-full border rounded-lg px-3 py-2 mt-1" ></Input>
+                      <Input type="text" value={updateUser?.lastName} name="lastName" placeholder="Doe"  onChange={handleChange}  className="w-full border rounded-lg px-3 py-2 mt-1" ></Input>
                     </div>
                     
                   </div>
                   <div>
                     <Label className="block text-sm font-medium text-gray-500">Email</Label>
-                    <Input type="email" value={updateUser.email} name="email"  onChange={handleChange}  disabled className="w-full border rounded-lg px-3 py-2 mt-1 bg-gray-100 cursor-not-allowed"></Input>
+                    <Input type="email" value={updateUser?.email} name="email"  onChange={handleChange}  disabled className="w-full border rounded-lg px-3 py-2 mt-1 bg-gray-100 cursor-not-allowed"></Input>
                   </div>
                   <div>
                     <Label className="block text-sm font-medium text-gray-500">Phone Number</Label>
-                    <Input type="text" value={updateUser.phoneNo} name="phoneNo" placeholder="Enter your Contact"  onChange={handleChange}  className="w-full border rounded-lg px-3 py-2 mt-1 "></Input>
+                    <Input type="text" value={updateUser?.phoneNo} name="phoneNo" placeholder="Enter your Contact"  onChange={handleChange}  className="w-full border rounded-lg px-3 py-2 mt-1 "></Input>
                   </div>
                   <div>
                     <Label className="block text-sm font-medium text-gray-500">Address</Label>
@@ -139,11 +139,11 @@ const Profile = () => {
                   <div className='grid grid-cols-2 gap-4 '>
                     <div>
                       <Label className="block text-sm font-medium text-gray-500">City</Label>
-                      <Input type="text" value={updateUser.city} name="city"  onChange={handleChange}  placeholder="Enter your City" className="w-full border rounded-lg px-3 py-2 mt-1 "></Input>
+                      <Input type="text" value={updateUser?.city} name="city"  onChange={handleChange}  placeholder="Enter your City" className="w-full border rounded-lg px-3 py-2 mt-1 "></Input>
                     </div>
                     <div>
                       <Label className="block text-sm font-medium text-gray-500">Zip Code</Label>
-                      <Input type="text" value={updateUser.zipCode} name="zipCode"  onChange={handleChange}  placeholder="Enter your Zip Code" className="w-full border rounded-lg px-3 py-2 mt-1 "></Input>
+                      <Input type="text" value={updateUser?.zipCode} name="zipCode"  onChange={handleChange}  placeholder="Enter your Zip Code" className="w-full border rounded-lg px-3 py-2 mt-1 "></Input>
                     </div>                    
                   </div>
                   <Button type="submit"  className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg">Update Profile</Button>
