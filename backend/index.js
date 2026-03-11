@@ -3,6 +3,7 @@ import express from "express";
 import mongoose from "mongoose";
 import userRoutes from "./routes/userRoutes.js";
 import cors from 'cors';
+import productRoutes from "./routes/productRoutes.js";
 
 const app=express();
 const PORT=process.env.PORT;
@@ -26,7 +27,7 @@ const connectDB=async()=>{
 }
 connectDB();
 
-
+app.use('/api/product/',productRoutes);
 app.use('/api/user/',userRoutes);
 
 app.listen(PORT,()=>{
