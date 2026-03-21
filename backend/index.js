@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import userRoutes from "./routes/userRoutes.js";
 import cors from 'cors';
 import productRoutes from "./routes/productRoutes.js";
+import cartRoutes from "./routes/cartRoutes.js";
 
 const app=express();
 const PORT=process.env.PORT;
@@ -29,6 +30,8 @@ connectDB();
 
 app.use('/api/product/',productRoutes);
 app.use('/api/user/',userRoutes);
+app.use('/api/cart/',cartRoutes);
+
 
 app.listen(PORT,()=>{
     console.log(`app is listening on port ${PORT}`);
