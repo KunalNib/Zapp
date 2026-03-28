@@ -9,6 +9,7 @@ import { setUser } from '@/redux/userSlice';
 
 const Navbar = () => {
   const {user}=useSelector(store=>store.user)
+  const {cart}=useSelector(store=>store.product);
   const accessToken=localStorage.getItem('accessToken')
   const navigate=useNavigate();
   const dispatch=useDispatch();
@@ -37,6 +38,7 @@ const Navbar = () => {
     }
   }
 
+  console.log(cart);
   const toLogin=()=>{
     navigate('/login');
   }
@@ -58,7 +60,7 @@ const Navbar = () => {
           </ul>
           <Link to={'/cart'} className='relative'>
             <ShoppingCart />
-            <span className=' rounded-full absolute text-xl text-blue-400 -top-3 -right-5  px-2'>1</span>
+            <span className=' rounded-full absolute text-xl text-blue-400 -top-3 -right-5  px-2'>{cart.items.length}</span>
           </Link>
           {
             user? <Button onClick={logoutHandler} className='bg-blue-600'>Logout</Button>: <Button onClick={toLogin} className='bg-blue-400'>Login</Button>

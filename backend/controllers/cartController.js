@@ -67,12 +67,12 @@ export const addToCart = async (req, res) => {
         }
         await cart.save();
 
-        const populatedCart = await cart.populate("items.productId");
+        await cart.populate("items.productId");
 
         return res.status(200).json({
             success: true,
             message: "Product added to cart successfully",
-            cart: populatedCart
+            cart:cart
         })
 
 

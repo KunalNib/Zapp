@@ -9,9 +9,9 @@ const productSlice=createSlice({
         setProduct:(state,action)=>{
             state.products=action.payload
         },
-        setCart:(state,action)=>[
+        setCart:(state,action)=>{
             state.cart=action.payload
-        ]
+        }
     }
 })
 export const {setProduct,setCart}=productSlice.actions;
