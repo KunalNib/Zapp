@@ -38,7 +38,7 @@ const Navbar = () => {
     }
   }
 
-  console.log(cart);
+  // console.log(cart);
   const toLogin=()=>{
     navigate('/login');
   }
@@ -51,7 +51,7 @@ const Navbar = () => {
         <nav className='flex gap-10 justify-between items-center'>
           <ul className='flex gap-7 items-center md:text-lg text-gray-700 font-semibold'>
             <Link to={'/'}>Home</Link>
-            <Link to={'products'}>Products</Link>
+            <Link to='/products'>Products</Link>
             {
               user && <Link to={`/profile/${user._id}`}>{user.firstName}</Link>
             }
@@ -60,7 +60,7 @@ const Navbar = () => {
           </ul>
           <Link to={'/cart'} className='relative'>
             <ShoppingCart />
-            <span className=' rounded-full absolute text-xl text-blue-400 -top-3 -right-5  px-2'>{cart.items.length}</span>
+            <span className=' rounded-full absolute text-xl text-blue-400 -top-3 -right-5  px-2'>{cart?.items?.length}</span>
           </Link>
           {
             user? <Button onClick={logoutHandler} className='bg-blue-600'>Logout</Button>: <Button onClick={toLogin} className='bg-blue-400'>Login</Button>
