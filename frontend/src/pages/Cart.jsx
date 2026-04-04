@@ -1,39 +1,72 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import React from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import image from '../assets/image.png'
 import { Button } from '@/components/ui/button';
 import { ShoppingCart, Trash2 } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { Input } from '@/components/ui/input';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { setCart } from '@/redux/productSlice';
+import { toast } from 'sonner';
 
 const Cart = () => {
 
+  const dispatch = useDispatch();
   const { cart } = useSelector(store => store.product);
   const subtotal = cart?.totalPrice;
   const shipping = subtotal > 299 ? 0 : 20;
 
-  const tax = subtotal * 0.05; //5% Tax;
+  const tax = (subtotal * 0.05); //5% Tax;
   const total = subtotal + shipping + tax;
 
-  // const handleQuantity = async (productId, type) => {
-  //   try {
-  //     // const res =
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
+  const API_URL = 'http://localhost:8000/api/cart'
+  const accessToken = localStorage.getItem("accessToken");
 
+
+  const handleQuantity = async (productId, type) => {
+    productId=productId.toString();
+    try {
+      const res = await axios.put(`${API_URL}/update`, { productId, type }, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      })
+      if (res.data.success) {
+          dispatch(setCart(res.data.cart));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  
+  const handleRemove=async(productId)=>{
+    try{
+      const res = await axios.delete(`${API_URL}/remove`, {
+        data:{productId},
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      })
+      if(res.data.success){
+        dispatch(setCart(res.data.cart));
+        toast.success("Product removed from cart successfully");
+      }
+    }
+    catch(error){
+      console.log(error);
+    }
+  }
 
   return (
-    <div className='pd-20 g-gray-50 min-h-screen  bg-blue-100 pt-5'>
+    <div className='p-20 g-gray-50 min-h-screen  bg-blue-100 pt-5'>
       {
         cart?.items?.length > 0 ?
           <div className='max-w-7xl mx-auto '>
             <h1 className='text-2xl font-bold text-gray-800 mb-7 '>Shopping Cart</h1>
             <div className='max-w-7xl mx-auto flex gap-7'>
-              <div className='flex flex-col gap5 flex-1 '>
+              <div className='flex flex-col gap-5 flex-1 '>
                 {cart?.items?.map((product, index) => {
                   return <Card key={index} className='mb-5 '>
                     <div className='flex justify-between items-center pr-7 '>
@@ -45,12 +78,18 @@ const Cart = () => {
                         </div>
                       </div>
                       <div className='flex gap-5 items-center'>
-                        <Button variant='outline' className='bg-blue-100'>-</Button>
-                        <span>1</span>
-                        <Button variant='outline' className='bg-blue-100'>+</Button>
+                        <Button variant='outline' onClick={() => {
+                          handleQuantity(product.productId._id, 'decrease')
+                        }} className='bg-blue-100'>-</Button>
+                        <span>{product.quantity}</span>
+                        <Button variant='outline' onClick={() => {
+                          handleQuantity(product.productId._id, 'increase')
+                        }} className='bg-blue-100'>+</Button>
                       </div>
                       <p>₹{product?.productId?.productPrice * product.quantity}</p>
-                      <p className='flex text-red-500 items-center gap-1 cursor-pointer'><Trash2 className='w-4 h-4'></Trash2>Remove</p>
+                      <p onClick={()=>{
+                        handleRemove(product?.productId?._id)
+                      }} className='flex text-red-500 items-center gap-1 cursor-pointer'><Trash2 className='w-4 h-4'></Trash2>Remove</p>
                     </div>
                   </Card>
                 })}
