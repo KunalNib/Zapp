@@ -6,6 +6,7 @@ import { toast } from 'sonner';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '@/redux/userSlice';
+import zapp1 from '/zapp1.png'
 
 const Navbar = () => {
   const {user}=useSelector(store=>store.user)
@@ -48,7 +49,7 @@ const Navbar = () => {
     <header className=' bg-blue-50 w-full z-20 border-b border-blue-200 '>
       <div className='max-w-7xl mx-auto flex justify-between items-center py-3'>
         <div className='border '>
-          <img src='./zapp1.png' alt='Zapp' className='w-[100px]  bg-blue-50'></img>
+          <img src={zapp1} alt='Zapp' className='w-[100px]  bg-blue-50'></img>
         </div>
         <nav className='flex gap-10 justify-between items-center'>
           <ul className='flex gap-7 items-center md:text-lg text-gray-700 font-semibold'>
