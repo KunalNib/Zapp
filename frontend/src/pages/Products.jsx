@@ -77,13 +77,13 @@ export const Products = () => {
       <div className="max-w-7xl mx-auto flex gap-7">
         <Filter allProducts={allProducts} priceRange={priceRange} setPriceRange={setPriceRange} search={search} setSearch={setSearch} category={category} setCategory={setCategory} brand={brand} setBrand={setBrand}/>
         <div className="flex flex-col flex-1">
-          <div className='flex justify-end mb-4'>
-            <Select onValueChange={(value)=>setSortOrder(value)}>
-              <SelectTrigger className='w-50'>
+          <div className='flex justify-end mb-4 '>
+            <Select onValueChange={(value)=>setSortOrder(value)} >
+              <SelectTrigger className='w-50 bg-white'>
                 <SelectValue placeholder="Sort By Price "></SelectValue>
               </SelectTrigger>
               <SelectContent>
-                <SelectGroup>
+                <SelectGroup >
                   <SelectItem value="lowtohigh">Price: Low to High</SelectItem>
                   <SelectItem value="hightolow">Price: High to Low</SelectItem>
                 </SelectGroup>
