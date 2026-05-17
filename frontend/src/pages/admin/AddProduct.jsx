@@ -7,15 +7,17 @@ import React, { useState } from 'react'
 import ProductDesc from '@/components/ProductDesc'
 import { toast } from 'sonner'
 import axios from 'axios'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import ImageUpload from '@/components/ImageUpload'
 import { Loader2 } from 'lucide-react'
+import { setProduct } from '@/redux/productSlice'
 
 const AddProduct = () => {
 
   const accessToken=localStorage.getItem("accessToken");
   const dispatch=useDispatch();
   const [loading,setLoading]=useState(false);
+  const {products}=useSelector(store=>store.product);
 
 
   const [productData,setProductData]=useState({
