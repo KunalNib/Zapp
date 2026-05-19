@@ -134,7 +134,7 @@ const Profile = () => {
                   </div>
                   <div>
                     <Label className="block text-sm font-medium text-gray-500">Address</Label>
-                    <Input type="text" name="address" placeholder="Enter your Address"  onChange={handleChange}  className="w-full border rounded-lg px-3 py-2 mt-1 "></Input>
+                    <Input type="text" name="address" value={updateUser?.address} placeholder="Enter your Address"  onChange={handleChange}  className="w-full border rounded-lg px-3 py-2 mt-1 "></Input>
                   </div>
                   <div className='grid grid-cols-2 gap-4 '>
                     <div>

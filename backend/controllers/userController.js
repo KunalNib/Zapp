@@ -319,6 +319,7 @@ export const changePassword = async (req, res) => {
 export const getAllUsers = async (req, res) => {
     try {
         const allUsers = await User.find();
+        // console.log("users are",allUsers);
         return res.status(200).json({
             success: true,
             users: allUsers
