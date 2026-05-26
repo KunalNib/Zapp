@@ -359,7 +359,7 @@ export const updateUser = async (req, res) => {
   try {
     const userId = req.params.id;
     const loggedInUser = req.user;
-    const { firstName, lastName, address, city, zipCode, phoneNo } = req.body;
+    const { firstName, lastName, address, city, zipCode, phoneNo,role } = req.body;
     
     if (loggedInUser.id.toString() != userId && loggedInUser.role !== 'admin') {
       return res.status(403).json({
@@ -402,6 +402,7 @@ export const updateUser = async (req, res) => {
     user.phoneNo = phoneNo || user.phoneNo;
     user.profilePic = profilePicUrl;
     user.ProfilePicPublicId = profilePicPublicId;
+    user.role= role || user.role;
     const updatedUser=await user.save();
     
     return res.status(200).json({

@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { ShoppingCart, Trash2 } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { Input } from '@/components/ui/input';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { setCart } from '@/redux/productSlice';
 import { toast } from 'sonner';
@@ -17,6 +17,7 @@ const Cart = () => {
   const { cart } = useSelector(store => store.product);
   const subtotal = cart?.totalPrice;
   const shipping = subtotal > 299 ? 0 : 20;
+  const navigate=useNavigate();
 
   const tax = (subtotal * 0.05); //5% Tax;
   const total = subtotal + shipping + tax;
@@ -65,7 +66,7 @@ const Cart = () => {
         cart?.items?.length > 0 ?
           <div className='max-w-7xl mx-auto '>
             <h1 className='text-2xl font-bold text-gray-800 mb-7 '>Shopping Cart</h1>
-            <div className='max-w-7xl mx-auto flex gap-7'>
+            <div className='max-w-7xl mx-auto lg:flex gap-7'>
               <div className='flex flex-col gap-5 flex-1 '>
                 {cart?.items?.map((product, index) => {
                   return <Card key={index} className='mb-5 '>
@@ -94,7 +95,7 @@ const Cart = () => {
                   </Card>
                 })}
               </div>
-              <div><Card className='w-[400px]'>
+              <div className=''><Card className='w-[400px]'>
                 <CardHeader>
                   <CardTitle>
                     Order Summary
@@ -123,7 +124,7 @@ const Cart = () => {
                       <Input placeholder='Promo Code'></Input>
                       <Button variant='outline'>Apply</Button>
                     </div>
-                    <Button className='w-full bg-blue-600'>Place Order</Button>
+                    <Button onClick={()=>navigate('/address')} className='w-full bg-blue-600'>Place Order</Button>
                     <Button variant='outline' className='w-full'>
                       <Link to='/products'>See Other Products</Link>
                     </Button>
@@ -137,7 +138,7 @@ const Cart = () => {
                 </CardContent></Card></div>
             </div>
           </div> :
-          <div className='flex flex-col items-center justify-center min-h=[60vh] p-6 text-center'>
+          <div className='flex flex-col lock items-center justify-center min-h=[60vh] p-6 text-center'>
             <div className='bg-blue-200 p-6 rounded-full'>
               <ShoppingCart className='w-16 h-16 text-blue-600' />
             </div>

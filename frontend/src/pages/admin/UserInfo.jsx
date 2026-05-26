@@ -10,6 +10,7 @@ import { toast } from 'sonner';
 import { setUser } from '@/redux/userSlice'
 import { useNavigate } from 'react-router-dom'
 import { ArrowLeft } from 'lucide-react'
+import { RadioGroup,RadioGroupItem } from '@/components/ui/radio-group'
 
 
 
@@ -80,7 +81,8 @@ const UserInfo = () => {
       });
       if (res.data.success) {
         toast.success(res.data.message);
-        dispatch(setUser(res.data.user));
+        // dispatch(setUser(res.data.user));
+        setUpdateUser(res.data.user);
       }
     }
     catch (error) {
@@ -145,6 +147,21 @@ const UserInfo = () => {
                       <Label className="block text-sm font-medium text-gray-500">Zip Code</Label>
                       <Input type="text" value={updateUser?.zipCode} name="zipCode"  onChange={handleChange}  placeholder="Enter your Zip Code" className="w-full border rounded-lg px-3 py-2 mt-1 "></Input>
                     </div>                    
+                  </div>
+                  <div className='flex gap-3 items-center '>
+                    <Label className='block text-sm font-medium'>Role :</Label>
+                    <RadioGroup onValueChange={(value)=>{
+                      setUpdateUser({...updateUser,role:value});
+                    }} value={updateUser?.role} className='flex items-center'>
+                        <div className='flex items-center space-x-2'>
+                          <RadioGroupItem value='user' id="user"/>
+                          <Label htmlFor='user'>User</Label>
+                        </div>
+                        <div className='flex items-center space-x-2'>
+                          <RadioGroupItem value='admin' id="admin"/>
+                          <Label htmlFor='admin'>Admin</Label>
+                        </div>
+                    </RadioGroup>
                   </div>
                   <Button type="submit"  className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg">Update Profile</Button>
                 </form>
