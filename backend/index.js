@@ -5,6 +5,7 @@ import userRoutes from "./routes/userRoutes.js";
 import cors from 'cors';
 import productRoutes from "./routes/productRoutes.js";
 import cartRoutes from "./routes/cartRoutes.js";
+import orderRoutes from './routes/orderRoutes.js'
 
 const app=express();
 const PORT=process.env.PORT;
@@ -31,6 +32,7 @@ connectDB();
 app.use('/api/product/',productRoutes);
 app.use('/api/user/',userRoutes);
 app.use('/api/cart/',cartRoutes);
+app.use('/api/orders/',orderRoutes);
 
 
 app.listen(PORT,()=>{

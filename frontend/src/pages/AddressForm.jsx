@@ -4,9 +4,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { addAddress, deleteAddress, setSelectedAddress } from '@/redux/productSlice';
-import { Trash2 } from 'lucide-react';
+import { Currency, Trash2 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
+import { toast } from 'sonner';
+import { current } from '@reduxjs/toolkit';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios'
 const AddressForm = () => {
 
   const [formData, setFormData] = useState({
@@ -19,6 +23,7 @@ const AddressForm = () => {
     zip: "",
     country: "",
   })
+  const accessToken = localStorage.getItem("accessToken");
   const { cart, addresses, selectedAddress } = useSelector(store => store.product);
   const [showForm, setShowForm] = useState(addresses?.length > 0 ? false : true);
   const dispatch = useDispatch();
@@ -34,6 +39,7 @@ const AddressForm = () => {
     dispatch(addAddress(formData));
     setShowForm(false);
   }
+  const navigate = useNavigate();
 
 
   const handleChange = (e) => {
@@ -41,6 +47,94 @@ const AddressForm = () => {
       ...formData,
       [e.target.name]: e.target.value
     })
+  }
+
+  const handlePayment = async () => {
+    try {
+      const { data } = await axios.post(`http://localhost:8000/api/orders/create-order`, {
+        products: cart?.items?.map(item => ({
+          productId: item.productId._id,
+          quantity: item.quantity
+        })),
+        tax,
+        shipping,
+        amount:total,
+        currency: "INR"
+      }, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      })
+
+      if (!data.success) toast.error("something went wrong");
+
+      const options = {
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+        amount: data.order.amount,
+        currency: data.order.currency,
+        order_id: data.order.id,
+        name: "Zapp",
+        description: "Order Payment",
+        handler: async function (res) {
+          try {
+            const verifyRes = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/order/verify-payment`, res, {
+              headers: {
+                Authorization: `Bearer ${accessToken}`
+              }
+            })
+            if (verifyRes.data.success) {
+              toast.success("Payment Successfull!")
+              dispatch(setCart({ items: [], totalPrice: 0 }))
+              navigate('/order-success')
+            }
+            else {
+              toast.error("payment verification failed")
+            }
+
+          }
+          catch (err) {
+
+            toast.error("Error Verifying Payment");
+
+          }
+        },
+        modal: {
+          ondismiss: async function () {
+            await axios.post(`http://localhost:8000/api/orders/verify-payment`, {
+              razorpay_order_id: data.order.id, paymentFailed: true,
+            }, {
+              headers: {
+                Authorization: `Bearer ${accessToken}`
+              }
+            })
+            toast.error("Payment Cancelled or Failed")
+          }
+        },
+        prefill: {
+          name: formData.fullName,
+          email: formData.email,
+          contact: formData.phone
+        },
+        theme: { color: "#2563EB" }
+      }
+
+      const rzp = new window.Razorpay(options);
+      rzp.on("payment.failed", async function (res) {
+        await axios.post(`http://localhost:8000/api/orders/verify-payment`, {
+          razorpay_order_id: data.order.id, paymentFailed: true,
+        }, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        })
+        toast.error("payment failed please try again");
+      })
+      rzp.open();
+    }
+    catch (err) {
+      console.log(err);
+      toast.error('something went wrong while processing payment')
+    }
   }
 
   return (
@@ -103,7 +197,7 @@ const AddressForm = () => {
                   )
                 }
                 <Button variant='outline' className='w-full' onClick={() => setShowForm(true)}>+ Add New Address</Button>
-                <Button className='w-full bg-blue-600 hover:bg-blue-800' disabled={selectedAddress === null}>Proceed To CheckOut</Button>
+                <Button onClick={handlePayment} className='w-full bg-blue-600 hover:bg-blue-800' disabled={selectedAddress === null}>Proceed To CheckOut</Button>
               </div>)
           }
         </div>
@@ -133,7 +227,7 @@ const AddressForm = () => {
               <div className='text-sm text-muted-foreground pt-4'>
                 <p>* Free shipping over 299</p>
                 <p>* 7-Days Return Policy</p>
-                <p>* Secure Checkout with Razerpay</p>
+                <p>* Secure Checkout with Razorpay</p>
               </div>
             </CardContent>
           </Card>
