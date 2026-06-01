@@ -11,6 +11,8 @@ import { toast } from 'sonner';
 import { current } from '@reduxjs/toolkit';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
+import { setCart } from '@/redux/productSlice';
+
 const AddressForm = () => {
 
   const [formData, setFormData] = useState({
@@ -77,7 +79,7 @@ const AddressForm = () => {
         description: "Order Payment",
         handler: async function (res) {
           try {
-            const verifyRes = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/order/verify-payment`, res, {
+            const verifyRes = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/orders/verify-payment`, res, {
               headers: {
                 Authorization: `Bearer ${accessToken}`
               }
@@ -93,9 +95,8 @@ const AddressForm = () => {
 
           }
           catch (err) {
-
+            console.log(err);
             toast.error("Error Verifying Payment");
-
           }
         },
         modal: {

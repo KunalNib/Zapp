@@ -21,7 +21,7 @@ import image from '../assets/image.png'
 import axios from 'axios';
 import { toast } from 'sonner';
 import { setUser } from '@/redux/userSlice'
-
+import MyOrder from './MyOrder'
 
 
 
@@ -152,19 +152,8 @@ const Profile = () => {
             </div>
           </div>
         </TabsContent>
-        <TabsContent value="orders">
-          <Card>
-            <CardHeader>
-              <CardTitle>Orders</CardTitle>
-              <CardDescription>
-                Track performance and user engagement metrics. Monitor trends and
-                identify growth opportunities.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="text-sm text-muted-foreground">
-              Page views are up 25% compared to last month.
-            </CardContent>
-          </Card>
+        <TabsContent id='orders' value="orders">
+          <MyOrder/>
         </TabsContent>
       </Tabs>
     </div>
