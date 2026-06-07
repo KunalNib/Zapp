@@ -60,7 +60,7 @@ const AdminUsers = () => {
               </div>
               <div className='flex  gap-3 mt-3'>
                 <Button className='bg-white hover:bg-black hover:text-white' onClick={()=>navigate(`/dashboard/users/${user?._id}`)} variant='outlined'><Edit/>Edit</Button>
-                <Button  className='bg-blue-600 hover:bg-blue-800'><Eye/>Show Order</Button>
+                <Button onClick={()=>navigate(`/dashboard/users/orders/${user?._id}`)}  className='bg-blue-600 hover:bg-blue-800'><Eye/>Show Order</Button>
               </div>
             </div>
           })

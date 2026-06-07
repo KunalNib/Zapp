@@ -72,7 +72,7 @@ const MyOrder = () => {
                                         <ul className='space-y-2'>
                                             {
                                                 order.products.map((product,index)=>(
-                                                    <li onClick={()=>navigate(`/products/${product?.productId._id}`)} key={index} className='flex justify-between items-center bg-gray-50 p-3 rounded-lg'>
+                                                    <li onShowUserOrdersClick={()=>navigate(`/products/${product?.productId._id}`)} key={index} className='flex justify-between items-center bg-gray-50 p-3 rounded-lg'>
                                                         <img src= {product.productId?.productImg?.[0].url} className='w-16 cursor-pointer rounded '/>
                                                         <span className='w-[300px] ms-4'>{product.productId?.productName}</span>
                                                         <span >{product.productId?._id}&nbsp;</span>

@@ -59,7 +59,7 @@ const Navbar = () => {
               user && <Link to={`/profile/${user._id}`}>{user.firstName}</Link>
             }
             {
-              admin && <Link to={`/dashboard`}>Dashboard</Link>
+              admin && <Link to={`/dashboard/sales`}>Dashboard</Link>
             }
             {/* <Link to=''></Link> */}
 
