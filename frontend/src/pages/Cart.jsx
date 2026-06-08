@@ -22,7 +22,7 @@ const Cart = () => {
   const tax = (subtotal * 0.05); //5% Tax;
   const total = subtotal + shipping + tax;
 
-  const API_URL = 'http://localhost:8000/api/cart'
+  const API_URL = `${import.meta.env.VITE_BACKEND_URL}/api/cart`
   const accessToken = localStorage.getItem("accessToken");
 
 

@@ -13,7 +13,7 @@ const ProductDesc = ({product}) => {
 
   const addToCart=async(productId)=>{
     try{
-      const res= await axios.post("http://localhost:8000/api/cart/add",{productId},{
+      const res= await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/cart/add`,{productId},{
         headers:{
           Authorization: `Bearer ${accessToken}`
         }
@@ -30,7 +30,7 @@ const ProductDesc = ({product}) => {
   }
 
   return (
-    <div className='flex flex-col gap-4'>
+    <div className='flex flex-col gap-4 sm:mx-auto mt-10'>
       <h1 className='font-bold text-4xl text-gray-800'>{product.productName}</h1>
       <p className='text-gray-800'>{product.category} | {product.brand}</p>
       <h2 className='text-blue-500 font-bold text-2xl'>₹{product.productPrice}</h2>

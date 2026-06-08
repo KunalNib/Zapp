@@ -14,7 +14,7 @@ const ShowUserOrders = () => {
     const accessToken=localStorage.getItem('accessToken');
     const navigate=useNavigate();
     const getUserOrders=async ()=>{
-        const res=await axios.get(`http://localhost:8000/api/orders/user-order/${userId}`,{
+        const res=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/orders/user-order/${userId}`,{
             headers:{
                 Authorization:`Bearer ${accessToken}`
             }

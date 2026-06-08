@@ -11,7 +11,7 @@ const AdminOrders = () => {
     const fetchOrders=async()=>{
       try{
 
-        const {data}=await axios.get("http://localhost:8000/api/orders/all-orders",{
+        const {data}=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/orders/all-orders`,{
           headers:{
             Authorization:`Bearer ${accessToken}`
           }
@@ -73,7 +73,7 @@ const AdminOrders = () => {
                       </td>
 
                       <td className='px-4 py-2 border '>
-                        <span className={`px-2 py-1 rounded text-xs font-medium ${order.statis=="Paid"
+                        <span className={`px-2 py-1 rounded text-xs font-medium ${order.status=="Paid"
                           ?"bg-green-100 text-green-700":order.status=="Pending"?"bg-yellow-100 text-yellow-700":
                           "bg-red-100 text-red-700"
                         }`}>

@@ -23,7 +23,7 @@ export const Products = () => {
   const getAllProduct = async () => {
     try {
       setLoading(true);
-      const res = await axios.get(`http://localhost:8000/api/product/all-products`);
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/product/all-products`);
       if (res.data.success) {
         setAllProducts(res.data.products);
         dispatch(setProduct(res.data.products));

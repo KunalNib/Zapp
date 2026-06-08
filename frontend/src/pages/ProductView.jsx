@@ -15,7 +15,7 @@ const ProductView = () => {
   return (
     <div className=' pt-10 py-10 max-w-7xl mx-auto'>
         <Breadcrum product={product}/>
-        <div className='mt-10 grid  grid-cols-2 items-start'>
+        <div className='mt-10 grid   lg:grid-cols-2 items-start'>
             <ProductImg images={product?.productImg}/>
             <ProductDesc product={product}/>
         </div>

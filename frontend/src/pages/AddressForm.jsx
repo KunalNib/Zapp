@@ -53,7 +53,7 @@ const AddressForm = () => {
 
   const handlePayment = async () => {
     try {
-      const { data } = await axios.post(`http://localhost:8000/api/orders/create-order`, {
+      const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/orders/create-order`, {
         products: cart?.items?.map(item => ({
           productId: item.productId._id,
           quantity: item.quantity
@@ -101,7 +101,7 @@ const AddressForm = () => {
         },
         modal: {
           ondismiss: async function () {
-            await axios.post(`http://localhost:8000/api/orders/verify-payment`, {
+            await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/orders/verify-payment`, {
               razorpay_order_id: data.order.id, paymentFailed: true,
             }, {
               headers: {
@@ -121,7 +121,7 @@ const AddressForm = () => {
 
       const rzp = new window.Razorpay(options);
       rzp.on("payment.failed", async function (res) {
-        await axios.post(`http://localhost:8000/api/orders/verify-payment`, {
+        await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/orders/verify-payment`, {
           razorpay_order_id: data.order.id, paymentFailed: true,
         }, {
           headers: {

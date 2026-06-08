@@ -61,7 +61,7 @@ const handleSubmit=async(e)=>{
   try{
 
     setLoading(true);
-    const res=await axios.post(`http://localhost:8000/api/product/add-product`,formData,{
+    const res=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/product/add-product`,formData,{
       headers:{
         Authorization:`Bearer ${accessToken}`
       }

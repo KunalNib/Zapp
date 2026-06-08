@@ -50,6 +50,10 @@ const router=createBrowserRouter([
     element:<><ProtectedRoute><Navbar/><Profile/></ProtectedRoute></>
   },
   {
+    path: '/forgot',
+    element:<><Navbar/> <ProductView/></>
+  },
+  {
     path: '/products',
     element:<><Navbar/> <Products/></>
   },
