@@ -2,7 +2,8 @@ import "dotenv/config";
 import nodemailer from "nodemailer";
 
 export const sendOTPMail = (otp, email) => {
-    const transporter = nodemailer.createTransport({
+    try{
+        const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
             user: process.env.MAIL_USER,
@@ -22,6 +23,11 @@ export const sendOTPMail = (otp, email) => {
         console.log('OTP sent successfully');
         console.log(info);
     })
+
+    }
+    catch(err){
+        console.log(err);
+    }
 
 
 }

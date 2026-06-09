@@ -22,6 +22,8 @@ import ProtectedRoute from './components/ProtectedRoute'
 import ProductView from './pages/ProductView'
 import AddressForm from './pages/AddressForm'
 import OrderSuccess from './pages/OrderSuccess'
+import ForgotPassword from './pages/ForgotPassword'
+import VerifyOtp from './pages/VerifyOtp'
 
 
 
@@ -51,7 +53,11 @@ const router=createBrowserRouter([
   },
   {
     path: '/forgot',
-    element:<><Navbar/> <ProductView/></>
+    element:<><Navbar/> <ForgotPassword/></>
+  },
+  {
+    path: '/verify-otp/:email',
+    element:<><Navbar/> <VerifyOtp/></>
   },
   {
     path: '/products',

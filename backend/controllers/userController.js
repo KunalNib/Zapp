@@ -231,6 +231,7 @@ export const verifyOtp = async (req, res) => {
     try {
         const { otp } = req.body
         const email = req.params.email;
+        const { newPassword, confirmPassword } = req.body;
         if (!otp) {
             return res.status(400).json({
                 success: false,
@@ -264,24 +265,8 @@ export const verifyOtp = async (req, res) => {
         }
         user.otp = null;
         user.otpExpiry = null;
-        await user.save();
-        return res.status(200).json({
-            success: true,
-            message: "otp verified successfully"
-        })
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message,
-        })
-    }
-}
 
-export const changePassword = async (req, res) => {
-    try {
-        const { newPassword, confirmPassword } = req.body;
-        const { email } = req.params;
-        const user = await User.findOne({ email });
+        // const { email } = req.params;
         if (!user) {
             return res.status(400).json({
                 success: false,
@@ -307,14 +292,25 @@ export const changePassword = async (req, res) => {
             success: true,
             message: "Password changed successfully"
         })
-    }
-    catch (error) {
-        return res.status(500).json({
+    } catch (error) {
+        res.status(500).json({
             success: false,
-            message: error.message
+            message: error.message,
         })
     }
 }
+
+// export const changePassword = async (req, res) => {
+//     try {
+        
+//     }
+//     catch (error) {
+//         return res.status(500).json({
+//             success: false,
+//             message: error.message
+//         })
+//     }
+// }
 
 export const getAllUsers = async (req, res) => {
     try {

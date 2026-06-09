@@ -126,6 +126,7 @@ const Login = () => {
                         {loading?<><Loader2 className="h-4 w-4 animate-spin mr-2"/> Please wait</>:'Login'}
                     </Button>
                     <p className='text-gray-700'>Already have a account?  <Link className='hover:underline cursor-pointer  text-blue-900' to={'/signup'}>Signup</Link></p>
+                    <p className='text-gray-700'><Link className='hover:underline cursor-pointer  text-blue-900' to={'/forgot'}>Forgot-Password</Link></p>
                     {/* <Button variant="outline" className="w-full">
                         Login with Google
                     </Button> */}
